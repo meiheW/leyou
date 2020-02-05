@@ -22,4 +22,9 @@ public class CategoryService {
         Category category = categoryMapper.queryById(id);
         return Lists.newArrayList(category);
     }
+
+    public List<Category> queryByPid(int pid) {
+        List<Category> categoryList = categoryMapper.queryByPid(pid);
+        return Lists.newArrayList(categoryList);
+    }
 }

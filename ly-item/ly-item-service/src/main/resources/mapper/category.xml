@@ -9,5 +9,8 @@
         SELECT * FROM tb_category WHERE id = #{id}
     </select>
 
+    <select id="queryByPid" parameterType="int" resultType="com.leyou.item.pojo.Category">
+        SELECT * FROM tb_category WHERE parent_id = #{pid}
+    </select>
 
 </mapper>

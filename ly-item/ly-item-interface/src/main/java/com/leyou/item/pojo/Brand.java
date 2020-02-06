@@ -9,17 +9,17 @@ import javax.persistence.Table;
 
 /**
  * @author meihewang
- * @date 2020/02/05  0:18
+ * @date 2020/02/06  15:41
  */
-@Table(name="tb_category")
+
+@Table(name = "tb_brand")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class Brand {
     @Id
     private Long id;
-    private String name;
-    private Long parentId;
-    private Boolean isParent;
-    private Integer sort;
+    private String name;// 品牌名称
+    private String image;// 品牌图片
+    private Character letter;
 }

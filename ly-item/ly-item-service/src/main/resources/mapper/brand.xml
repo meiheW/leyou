@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.leyou.item.mapper.BrandMapper">
+
+    <select id="queryBrandCount" parameterType="String" resultType="long">
+        SELECT COUNT(*) FROM tb_brand
+        <where>
+            <if test="key!=null">
+                name LIKE '%${key}%' or letter ='${key}'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBrandList" resultType="com.leyou.item.pojo.Brand">
+        SELECT * FROM tb_brand
+        <where>
+            <if test="key!=null and key!=''">
+                name LIKE '%${key}%' or letter ='${key}'
+            </if>
+        </where>
+        <if test="sortBy!=null">
+            ORDER by ${sortBy}
+            <if test="desc!=null and desc==true">DESC</if>
+            <if test="desc!=null and desc==false">ASC</if>
+        </if>
+        LIMIT ${currentIndex}, ${pageSize}
+    </select>
+
+</mapper>

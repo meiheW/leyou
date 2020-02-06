@@ -29,4 +29,12 @@
         LIMIT ${currentIndex}, ${pageSize}
     </select>
 
+
+    <insert id="insert" parameterType="com.leyou.item.pojo.Brand">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO tb_brand (`name`, `image`, `letter`) VALUES (#{brand.name}, #{brand.image}, #{brand.letter})
+    </insert>
+
 </mapper>

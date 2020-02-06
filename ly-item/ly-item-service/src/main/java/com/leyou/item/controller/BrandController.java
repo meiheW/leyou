@@ -6,6 +6,8 @@ import com.leyou.item.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author meihewang
  * @date 2020/02/06  15:56
@@ -27,4 +29,10 @@ public class BrandController {
         PageResult<Brand> result = this.brandService.queryBrandByPageAndSort(page,rows,sortBy,desc, key);
         return result;
     }
+
+    @PostMapping
+    public void saveBrand(Brand brand, @RequestParam("cids")List<Long> cids){
+        brandService.saveBrand(brand, cids);
+    }
+
 }

@@ -18,4 +18,6 @@ public interface BrandMapper {
                                @Param("sortBy")String sortBy,
                                @Param("desc")Boolean desc,
                                @Param("key")String key);
+
+    Integer insert(@Param("brand") Brand brand);
 }

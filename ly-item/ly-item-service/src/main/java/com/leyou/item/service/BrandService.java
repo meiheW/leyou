@@ -28,4 +28,9 @@ public class BrandService {
         return prb;
 
     }
+
+    public void saveBrand(Brand brand, List<Long> cids){
+        Integer id = brandMapper.insert(brand);
+        System.out.println("+++++ id:" + brand.getId() + " +++++");
+    }
 }

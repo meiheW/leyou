@@ -5,6 +5,7 @@ import com.leyou.item.mapper.BrandMapper;
 import com.leyou.item.pojo.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,8 +30,14 @@ public class BrandService {
 
     }
 
+    @Transactional
     public void saveBrand(Brand brand, List<Long> cids){
         Integer id = brandMapper.insert(brand);
-        System.out.println("+++++ id:" + brand.getId() + " +++++");
+        if(id==0){
+            return;
+        }
+        for(Long cid : cids){
+            brandMapper.insertCategoryBrand(brand, cid);
+        }
     }
 }

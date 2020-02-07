@@ -14,7 +14,7 @@
         </where>
     </select>
 
-    <select id="queryBrandList" resultType="com.leyou.item.pojo.Brand">
+    <select id="queryBrandList" resultType="brand">
         SELECT * FROM tb_brand
         <where>
             <if test="key!=null and key!=''">
@@ -30,11 +30,14 @@
     </select>
 
 
-    <insert id="insert" parameterType="com.leyou.item.pojo.Brand">
-        <selectKey resultType="int" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() as id
-        </selectKey>
+    <insert id="insert" parameterType="brand" useGeneratedKeys="true" keyProperty="brand.id">
         INSERT INTO tb_brand (`name`, `image`, `letter`) VALUES (#{brand.name}, #{brand.image}, #{brand.letter})
     </insert>
+
+    <insert id="insertCategoryBrand">
+        INSERT INTO tb_category_brand(`category_id`, `brand_id`) VALUES (#{cid}, #{brand.id});
+    </insert>
+
+
 
 </mapper>

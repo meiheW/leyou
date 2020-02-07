@@ -20,4 +20,6 @@ public interface BrandMapper {
                                @Param("key")String key);
 
     Integer insert(@Param("brand") Brand brand);
+
+    Integer insertCategoryBrand(@Param("brand") Brand brand, @Param("cid") Long cid);
 }

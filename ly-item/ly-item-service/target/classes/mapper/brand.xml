@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.leyou.item.mapper.BrandMapper">
+
+    <select id="queryBrandCount" parameterType="String" resultType="long">
+        SELECT COUNT(*) FROM tb_brand
+        <where>
+            <if test="key!=null">
+                name LIKE '%${key}%' or letter ='${key}'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBrandList" resultType="brand">
+        SELECT * FROM tb_brand
+        <where>
+            <if test="key!=null and key!=''">
+                name LIKE '%${key}%' or letter ='${key}'
+            </if>
+        </where>
+        <if test="sortBy!=null">
+            ORDER by ${sortBy}
+            <if test="desc!=null and desc==true">DESC</if>
+            <if test="desc!=null and desc==false">ASC</if>
+        </if>
+        LIMIT ${currentIndex}, ${pageSize}
+    </select>
+
+
+    <insert id="insert" parameterType="brand" useGeneratedKeys="true" keyProperty="brand.id">
+        INSERT INTO tb_brand (`name`, `image`, `letter`) VALUES (#{brand.name}, #{brand.image}, #{brand.letter})
+    </insert>
+
+    <insert id="insertCategoryBrand">
+        INSERT INTO tb_category_brand(`category_id`, `brand_id`) VALUES (#{cid}, #{brand.id});
+    </insert>
+
+
+
+</mapper>

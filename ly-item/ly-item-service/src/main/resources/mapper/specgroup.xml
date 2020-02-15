@@ -29,7 +29,7 @@
     </update>
 
     <delete id="deleteSpecGroup" parameterType="java.lang.Long">
-        DELETE FROM tb_spec_group WHERE id = #{id}
+        DELETE FROM tb_spec_group WHERE id=#{id}
     </delete>
 
 

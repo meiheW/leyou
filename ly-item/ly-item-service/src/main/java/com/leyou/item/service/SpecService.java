@@ -24,15 +24,6 @@ public class SpecService {
     }
 
     public void addSpecGroup(SpecGroup specGroup) {
-        if(specGroup.getId()==null){
-            specGroupMapper.addSpecGroup(specGroup);
-        }else{
-            specGroupMapper.updateSpecGroup(specGroup);
-        }
-    }
-
-
-    public void deleteSpecDelete(Long cid) {
-        specGroupMapper.deleteSpecGroup(cid);
+        specGroupMapper.addSpecGroup(specGroup);
     }
 }

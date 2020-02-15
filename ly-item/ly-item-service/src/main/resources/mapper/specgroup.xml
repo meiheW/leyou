@@ -8,19 +8,29 @@
         SELECT * FROM tb_spec_group
         <where>
             <if test="id!=null">
-                and id=#{id}
+                and `id`=#{id}
             </if>
             <if test="cid!=null">
-                and cid=#{cid}
+                and `cid`=#{cid}
             </if>
             <if test="name!=null and name!=''">
-                and name=#{name}
+                and `name`=#{name}
             </if>
         </where>
     </select>
 
     <insert id="addSpecGroup" parameterType="SpecGroup">
-        insert into tb_spec_group (`cid`, `name`) values (#{cid}, #{name});
+        INSERT INTO tb_spec_group (`cid`, `name`) VALUES (#{cid}, #{name});
     </insert>
+
+    <update id="updateSpecGroup" parameterType="SpecGroup">
+        UPDATE tb_spec_group SET `cid`=#{cid}, `name`=#{name}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteSpecGroup" parameterType="java.lang.Long">
+        DELETE FROM tb_spec_group WHERE id = #{id}
+    </delete>
+
 
 </mapper>

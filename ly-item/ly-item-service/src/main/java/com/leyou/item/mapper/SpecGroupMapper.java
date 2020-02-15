@@ -14,4 +14,8 @@ public interface SpecGroupMapper {
     List<SpecGroup> querySpecGroup(SpecGroup specGroup);
 
     void addSpecGroup(SpecGroup specGroup);
+
+    void updateSpecGroup(SpecGroup specGroup);
+
+    void deleteSpecGroup(Long cid);
 }

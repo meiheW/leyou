@@ -24,10 +24,18 @@ public class SpecController {
     }
 
     @PostMapping("/group")
-
     public void addSpecGroup(@RequestBody SpecGroup specGroup){
         specService.addSpecGroup(specGroup);
+    }
 
+    @PutMapping("/group")
+    public void editSpecGroup(@RequestBody SpecGroup specGroup){
+        specService.addSpecGroup(specGroup);
+    }
+
+    @DeleteMapping("/group/{cid}")
+    public void delete(@PathVariable("cid") Long cid){
+        specService.deleteSpecDelete(cid);
     }
 
 }

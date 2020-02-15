@@ -12,28 +12,28 @@ import java.util.List;
  * @date 2020/02/15  20:24
  */
 @RestController
-@RequestMapping("/spec")
+@RequestMapping("/spec/group")
 public class SpecController {
 
     @Autowired
     private SpecService specService;
 
-    @GetMapping("/groups/{cid}")
+    @GetMapping("/list/{cid}")
     public List<SpecGroup> querySpecGroup(@PathVariable("cid") Long cid){
         return specService.querySpecGroup(cid);
     }
 
-    @PostMapping("/group")
+    @PostMapping("/add")
     public void addSpecGroup(@RequestBody SpecGroup specGroup){
         specService.addSpecGroup(specGroup);
     }
 
-    @PutMapping("/group")
+    @PostMapping("/edit")
     public void editSpecGroup(@RequestBody SpecGroup specGroup){
         specService.addSpecGroup(specGroup);
     }
 
-    @DeleteMapping("/group/{cid}")
+    @DeleteMapping("/delete/{cid}")
     public void delete(@PathVariable("cid") Long cid){
         specService.deleteSpecDelete(cid);
     }

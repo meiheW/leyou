@@ -22,4 +22,8 @@ public class SpecService {
         specGroup.setCid(cid);
         return specGroupMapper.querySpecGroup(specGroup);
     }
+
+    public void addSpecGroup(SpecGroup specGroup) {
+        specGroupMapper.addSpecGroup(specGroup);
+    }
 }

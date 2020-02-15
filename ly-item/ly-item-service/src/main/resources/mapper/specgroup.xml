@@ -19,4 +19,8 @@
         </where>
     </select>
 
+    <insert id="addSpecGroup" parameterType="SpecGroup">
+        insert into tb_spec_group (`cid`, `name`) values (#{cid}, #{name});
+    </insert>
+
 </mapper>

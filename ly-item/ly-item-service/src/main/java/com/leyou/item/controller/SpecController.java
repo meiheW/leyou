@@ -3,10 +3,7 @@ package com.leyou.item.controller;
 import com.leyou.item.pojo.SpecGroup;
 import com.leyou.item.service.SpecService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,13 @@ public class SpecController {
     @GetMapping("/groups/{cid}")
     public List<SpecGroup> querySpecGroup(@PathVariable("cid") Long cid){
         return specService.querySpecGroup(cid);
+    }
+
+    @PostMapping("/group")
+
+    public void addSpecGroup(@RequestBody SpecGroup specGroup){
+        specService.addSpecGroup(specGroup);
+
     }
 
 }

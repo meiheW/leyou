@@ -12,4 +12,6 @@ import java.util.List;
 public interface SpecGroupMapper {
 
     List<SpecGroup> querySpecGroup(SpecGroup specGroup);
+
+    void addSpecGroup(SpecGroup specGroup);
 }

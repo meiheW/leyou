@@ -5,6 +5,10 @@
 
 <mapper namespace="com.leyou.item.mapper.BrandMapper">
 
+    <select id="queryById" resultType="brand">
+        SELECT * FROM tb_brand where id=#{id}
+    </select>
+
     <select id="queryBrandCount" parameterType="String" resultType="long">
         SELECT COUNT(*) FROM tb_brand
         <where>

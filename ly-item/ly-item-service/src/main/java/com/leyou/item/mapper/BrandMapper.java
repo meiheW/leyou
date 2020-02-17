@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface BrandMapper {
 
+    Brand queryById(Long id);
+
     Long queryBrandCount(@Param("key") String key);
 
     List<Brand> queryBrandList(@Param("currentIndex")Integer currentIndex,

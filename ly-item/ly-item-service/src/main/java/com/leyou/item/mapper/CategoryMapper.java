@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface CategoryMapper {
 
-    Category queryById(int id);
+    Category queryById(Long id);
 
-    List<Category> queryByPid(int pid);
+    List<Category> queryByPid(Long pid);
 
 
 }

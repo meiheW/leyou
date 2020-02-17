@@ -23,7 +23,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @RequestMapping("/list")
-    public List<Category> queryList(@RequestParam("pid")Integer pid){
+    public List<Category> queryList(@RequestParam("pid")Long pid){
         return categoryService.queryByPid(pid);
     }
 

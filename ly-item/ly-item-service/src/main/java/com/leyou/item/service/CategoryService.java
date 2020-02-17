@@ -18,12 +18,12 @@ public class CategoryService {
     @Autowired
     CategoryMapper categoryMapper;
 
-    public List<Category> query(int id) {
+    public List<Category> query(Long id) {
         Category category = categoryMapper.queryById(id);
         return Lists.newArrayList(category);
     }
 
-    public List<Category> queryByPid(int pid) {
+    public List<Category> queryByPid(Long pid) {
         List<Category> categoryList = categoryMapper.queryByPid(pid);
         return Lists.newArrayList(categoryList);
     }

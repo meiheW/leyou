@@ -43,5 +43,11 @@
     </insert>
 
 
+    <select id="queryBrandByCid" parameterType="java.lang.Long" resultType="brand">
+        select tb.* from tb_category_brand as tcb left join tb_brand tb on
+        tcb.brand_id = tb.id where tcd.category_id = #{cid};
+    </select>
+
+
 
 </mapper>

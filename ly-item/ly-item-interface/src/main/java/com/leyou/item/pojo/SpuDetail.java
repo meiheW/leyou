@@ -1,5 +1,7 @@
 package com.leyou.item.pojo;
 
+import lombok.Data;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,6 +10,7 @@ import javax.persistence.Table;
  * @date 2020/02/16  20:59
  */
 @Table(name="tb_spu_detail")
+@Data
 public class SpuDetail {
 
     /**

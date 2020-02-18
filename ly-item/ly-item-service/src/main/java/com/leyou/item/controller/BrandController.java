@@ -34,5 +34,9 @@ public class BrandController {
     public void saveBrand(Brand brand, @RequestParam("cids")List<Long> cids){
         brandService.saveBrand(brand, cids);
     }
+    @GetMapping("/cid/{cid}")
+    public List<Brand> queryBrandByCid(@PathVariable("cid") Long cid){
+        return brandService.queryBrandByCid(cid);
+    }
 
 }

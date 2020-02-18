@@ -24,4 +24,6 @@ public interface BrandMapper {
     Integer insert(@Param("brand") Brand brand);
 
     Integer insertCategoryBrand(@Param("brand") Brand brand, @Param("cid") Long cid);
+
+    List<Brand> queryBrandByCid(Long cid);
 }

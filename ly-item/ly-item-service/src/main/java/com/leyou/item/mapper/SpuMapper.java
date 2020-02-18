@@ -11,6 +11,7 @@ import java.util.List;
  * @date 2020/02/16  21:02
  */
 public interface SpuMapper {
+
     List<Spu> querySpuList(Boolean saleable, String key, Integer currentIndex, Integer pageSize);
 
     Long querySpuCount(@Param("saleable")Boolean saleable, @Param("key")String key);

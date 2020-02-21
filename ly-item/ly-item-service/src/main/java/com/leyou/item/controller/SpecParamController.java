@@ -19,8 +19,10 @@ public class SpecParamController {
     SpecParamService specParamService;
 
     @GetMapping("/list")
-    public List<SpecGroupParam> queryGroupParam(Long gid){
-        return specParamService.queryByGid(gid);
+    public List<SpecGroupParam> queryGroupParam(
+            @RequestParam(value = "gid", required = false) Long gid,
+            @RequestParam(value = "cid", required = false) Long cid){
+        return specParamService.querySpecGroupParam(gid, cid);
     }
 
     @PostMapping("/add")

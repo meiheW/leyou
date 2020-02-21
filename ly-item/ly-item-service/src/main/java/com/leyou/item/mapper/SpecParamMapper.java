@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2020/02/15  23:31
  */
 public interface SpecParamMapper {
-    List<SpecGroupParam> queryByGid(Long gid);
+    List<SpecGroupParam> querySpecGroupParam(@Param("gid")Long gid, @Param("cid")Long cid);
 
     void addGroupParamList(List<SpecGroupParam> specGroupParams);
 

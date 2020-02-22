@@ -31,4 +31,11 @@
         LIMIT ${currentIndex}, ${pageSize}
     </select>
 
+    <insert id="insertSpu" useGeneratedKeys="true" keyProperty="spuBo.id">
+        insert into tb_spu
+        (`title`, `sub_title`, `cid1`, `cid2`, `cid3`, `brand_id`, `saleable`, `valid`)
+        values
+        (#{spuBo.title}, #{spuBo.subTitle}, #{spuBo.cid1}, #{spuBo.cid2}, #{spuBo.cid3}, #{spuBo.brandId}, #{spuBo.saleable}, #{spuBo.valid})
+    </insert>
+
 </mapper>

@@ -1,13 +1,12 @@
 package com.leyou.item.controller;
 
 import com.leyou.common.pojo.PageResult;
+import com.leyou.item.dto.SpuBo;
 import com.leyou.item.dto.SpuDto;
 import com.leyou.item.pojo.Spu;
 import com.leyou.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author meihewang
@@ -27,5 +26,12 @@ public class GoodsController {
             @RequestParam(value = "key", required = false) String key) {
         return goodsService.querySpuByPage(saleable, key, pageNo, pageSize);
     }
+
+    @PostMapping("/goods")
+    public void insertGoods(SpuBo spuBo){
+        goodsService.insertGoods(spuBo);
+    }
+
+
 
 }

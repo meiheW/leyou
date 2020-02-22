@@ -4,14 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.leyou.item.mapper.SpecParamMapper">
-    <select id="queryByGid" resultType="SpecGroupParam">
-        SELECT * FROM tb_spec_param where
+    <select id="querySpecGroupParam" resultType="SpecGroupParam">
+        SELECT * FROM tb_spec_param
         <where>
             <if test="gid!=null and gid != ''">
                 and group_id=#{gid}
             </if>
             <if test="cid!=null and cid != ''">
                 and cid=#{cid}
+            </if>
+            <if test="searching!=null">
+                and searching=#{searching}
+            </if>
+            <if test="generic!=null">
+                and generic=#{generic}
             </if>
         </where>
     </select>

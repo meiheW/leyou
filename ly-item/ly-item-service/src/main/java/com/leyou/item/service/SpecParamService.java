@@ -18,8 +18,8 @@ public class SpecParamService {
     @Autowired
     SpecParamMapper specParamMapper;
 
-    public List<SpecGroupParam> querySpecGroupParam(Long gid, Long cid) {
-        return specParamMapper.querySpecGroupParam(gid, cid);
+    public List<SpecGroupParam> querySpecGroupParam(Long gid, Long cid, Boolean searching, Boolean generic) {
+        return specParamMapper.querySpecGroupParam(gid, cid, searching, generic);
     }
 
     public void addGroupParam(SpecGroupParam specGroupParam) {

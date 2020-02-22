@@ -14,7 +14,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.leyou.item.pojo
+  type-aliases-package: com.leyou.item
   mapper-locations: classpath:/mapper/*.xml
 eureka:
   client:

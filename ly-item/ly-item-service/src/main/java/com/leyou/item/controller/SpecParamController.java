@@ -2,6 +2,7 @@ package com.leyou.item.controller;
 
 import com.leyou.item.pojo.SpecGroupParam;
 import com.leyou.item.service.SpecParamService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,10 @@ public class SpecParamController {
     @GetMapping("/list")
     public List<SpecGroupParam> queryGroupParam(
             @RequestParam(value = "gid", required = false) Long gid,
-            @RequestParam(value = "cid", required = false) Long cid){
-        return specParamService.querySpecGroupParam(gid, cid);
+            @RequestParam(value = "cid", required = false) Long cid,
+            @RequestParam(value = "searching", required = false) Boolean searching,
+            @RequestParam(value="generic", required = false) Boolean generic){
+        return specParamService.querySpecGroupParam(gid, cid, searching, generic);
     }
 
     @PostMapping("/add")

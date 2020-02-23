@@ -7,11 +7,36 @@
 
     <insert id="insertSpuDetail">
         INSERT INTO tb_spu_detail
-            (`spu_id`, `description`, `specifications`, `spec_template`, `packing_list`, `after_service`)
+            (`spu_id`,
+            `description`,
+            `specifications`,
+            `spec_template`,
+            `packing_list`,
+            `after_service`)
         VALUES
-            (#{spuId}, #{spuDetail.description}, #{spuDetail.specifications}, #{spuDetail.specTemplate}, #{spuDetail.packingList}, #{spuDetail.afterService})
+            (#{spuDetail.spuId},
+            #{spuDetail.description},
+            #{spuDetail.specifications},
+            #{spuDetail.specTemplate},
+            #{spuDetail.packingList},
+            #{spuDetail.afterService})
     </insert>
 
+    <select id="queryById" parameterType="java.lang.Long">
+        select * from tb_spu_detail
+        where spu_id = #{spuId}
+    </select>
+
+    <update id="updateSpuDetail">
+        update tb_spu_detail set
+            `description`=#{spuDetail.description},
+            `specifications`=#{spuDetail.specifications},
+            `spec_template`=#{spuDetail.specTemplate},
+            `packing_list`=#{spuDetail.packingList},
+            `after_service`=#{spuDetail.afterService}
+        where
+            spu_id=#{spuDetail.spuId}
+    </update>
 
 
 

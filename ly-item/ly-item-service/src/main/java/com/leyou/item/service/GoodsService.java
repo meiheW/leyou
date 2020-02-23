@@ -6,16 +6,15 @@ import com.leyou.item.dto.SkuDto;
 import com.leyou.item.dto.SpuBo;
 import com.leyou.item.dto.SpuDto;
 import com.leyou.item.mapper.*;
-import com.leyou.item.pojo.Brand;
-import com.leyou.item.pojo.Sku;
-import com.leyou.item.pojo.Spu;
-import com.leyou.item.pojo.Stock;
+import com.leyou.item.pojo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 /**
  * @author meihewang
@@ -64,7 +63,8 @@ public class GoodsService {
             throw new RuntimeException();
         }
         Long spuId = spuBo.getId();
-        spuDetailMapper.insertSpuDetail(spuBo.getSpuDetail(), spuId);
+        spuBo.getSpuDetail().setSpuId(spuId);
+        spuDetailMapper.insertSpuDetail(spuBo.getSpuDetail());
 
         List<SkuDto> skus = spuBo.getSkus();
         for(Sku sku : skus){
@@ -79,5 +79,46 @@ public class GoodsService {
             skuMapper.insertStock(stock);
         }
 
+    }
+
+    public SpuDetail querySpuDetailById(Long spuId) {
+        return spuDetailMapper.queryById(spuId);
+    }
+
+    public List<SkuDto> querySkuBySpuId(Long spuId) {
+        List<Sku> skuList = skuMapper.querySkuListBySpuId(spuId);
+        List<SkuDto> skuDtoList = Lists.newArrayList();
+        for(Sku sku : skuList){
+            SkuDto sd = new SkuDto();
+            BeanUtils.copyProperties(sku, sd);
+            Stock stock = skuMapper.queryStockBySkuId(sku.getId());
+            sd.setStock(stock.getStock());
+            skuDtoList.add(sd);
+        }
+        return skuDtoList;
+    }
+
+    @Transactional
+    public void updateGoods(SpuBo spuBo) {
+        //删除sku和库存
+        List<Sku> skuList = skuMapper.querySkuListBySpuId(spuBo.getId());
+        for(Sku sku : skuList){
+            skuMapper.deleteStockBySkuId(sku.getId());
+        }
+        skuMapper.deleteSkuBySpuId(spuBo.getId());
+        //更新spu
+        spuMapper.updateSpu(spuBo);
+        //更新spuDetail
+        spuBo.getSpuDetail().setSpuId(spuBo.getId());
+        spuDetailMapper.updateSpuDetail(spuBo.getSpuDetail());
+        //插入sku和库存
+        for(SkuDto sd : spuBo.getSkus()){
+            sd.setSpuId(spuBo.getId());
+            skuMapper.insertSku(sd);
+            Stock stock = new Stock();
+            stock.setSkuId(sd.getId());
+            stock.setStock(sd.getStock());
+            skuMapper.insertStock(stock);
+        }
     }
 }

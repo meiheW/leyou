@@ -11,10 +11,33 @@
             (#{sku.spuId}, #{sku.title}, #{sku.images}, #{sku.price}, #{sku.indexes}, #{sku.ownSpec}, #{sku.enable})
     </insert>
 
+    <select id="querySkuListBySpuId" parameterType="java.lang.Long" resultType="sku">
+        select * from tb_sku
+        where spu_id = #{spuId}
+    </select>
+
+    <delete id="deleteSkuBySpuId" parameterType="java.lang.Long">
+        delete from tb_sku
+        where spu_id = #{spuId}
+    </delete>
+
+
     <insert id="insertStock">
         INSERT INTO tb_stock
             (`sku_id`, `stock`)
         VALUES
             (#{stock.skuId}, #{stock.stock})
     </insert>
+
+    <select id="queryStockBySkuId" parameterType="java.lang.Long">
+        select * from tb_stock
+        where sku_id = #{skuId}
+    </select>
+
+    <delete id="deleteStockBySkuId" parameterType="java.lang.Long">
+        delete from tb_stock
+        where sku_id = #{skuId}
+    </delete>
+
+
 </mapper>

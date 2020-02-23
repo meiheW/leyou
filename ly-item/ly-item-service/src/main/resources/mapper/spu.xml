@@ -38,4 +38,12 @@
         (#{spuBo.title}, #{spuBo.subTitle}, #{spuBo.cid1}, #{spuBo.cid2}, #{spuBo.cid3}, #{spuBo.brandId}, #{spuBo.saleable}, #{spuBo.valid})
     </insert>
 
+    <update id="updateSpu">
+        update tb_spu set
+            `title`=#{spuBo.title}, `sub_title`=#{spuBo.subTitle},
+            `cid1`=#{spuBo.cid1}, `cid2`=#{spuBo.cid2}, `cid3`=#{spuBo.cid3},
+            `brand_id`=#{spuBo.brandId}, `saleable`=#{spuBo.saleable}, `valid`=#{spuBo.valid}
+        where
+            `id`=#{spuBo.id}
+    </update>
 </mapper>

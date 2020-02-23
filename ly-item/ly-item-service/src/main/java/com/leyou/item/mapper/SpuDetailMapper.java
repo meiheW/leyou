@@ -9,5 +9,9 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SpuDetailMapper {
 
-    void insertSpuDetail(@Param("spuDetail") SpuDetail spuDetail, @Param("spuId")Long spuId);
+    void insertSpuDetail(@Param("spuDetail") SpuDetail spuDetail);
+
+    SpuDetail queryById(Long spuId);
+
+    void updateSpuDetail(@Param("spuDetail") SpuDetail spuDetail);
 }

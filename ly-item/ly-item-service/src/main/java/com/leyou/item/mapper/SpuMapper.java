@@ -18,4 +18,6 @@ public interface SpuMapper {
     Long querySpuCount(@Param("saleable")Boolean saleable, @Param("key")String key);
 
     void insertSpu(@Param("spuBo")SpuBo spuBo);
+
+    void updateSpu(@Param("spuBo")SpuBo spuBo);
 }

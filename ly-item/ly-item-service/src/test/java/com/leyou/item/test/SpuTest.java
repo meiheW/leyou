@@ -24,10 +24,16 @@ public class SpuTest {
     GoodsService goodsService;
 
     @Test
+    public void querySpuDetailById(){
+        SpuDetail spuDetail = goodsService.querySpuDetailById(225L);
+        System.out.println(spuDetail);
+    }
+
+    @Test
     public void insetSpu() {
         SpuDetail sd = new SpuDetail();
-        sd.setSpecTemplate("SpecTemplate");
-        sd.setSpecifications("Specifications");
+        sd.setSpecialSpec("SpecTemplate");
+        sd.setGenericSpec("Specifications");
         sd.setDescription("Description");
         sd.setPackingList("PackingList");
         sd.setAfterService("AfterService");
@@ -69,8 +75,8 @@ public class SpuTest {
     @Test
     public void updateSpu(){
         SpuDetail sd = new SpuDetail();
-        sd.setSpecTemplate("SpecTemplate1");
-        sd.setSpecifications("Specifications1");
+        sd.setSpecialSpec("SpecTemplate1");
+        sd.setGenericSpec("Specifications1");
         sd.setDescription("Description1");
         sd.setPackingList("PackingList1");
         sd.setAfterService("AfterService1");

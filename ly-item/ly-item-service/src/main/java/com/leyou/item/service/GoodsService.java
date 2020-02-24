@@ -58,6 +58,8 @@ public class GoodsService {
 
     @Transactional
     public void insertGoods(SpuBo spuBo) {
+        spuBo.setSaleable(true);
+        spuBo.setValid(true);
         spuMapper.insertSpu(spuBo);
         if(spuBo.getId()==null){
             throw new RuntimeException();
@@ -109,7 +111,6 @@ public class GoodsService {
         //更新spu
         spuMapper.updateSpu(spuBo);
         //更新spuDetail
-        spuBo.getSpuDetail().setSpuId(spuBo.getId());
         spuDetailMapper.updateSpuDetail(spuBo.getSpuDetail());
         //插入sku和库存
         for(SkuDto sd : spuBo.getSkus()){

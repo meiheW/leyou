@@ -21,7 +21,7 @@
         SELECT * FROM tb_spu
         <where>
             <if test="key!=null and key!=''">
-                (title LIKE '%${key}%' or sub_title LIKE '%${key}%')
+                title LIKE '%${key}%' or sub_title LIKE '%${key}%'
             </if>
             <if test="saleable!=null">
                 and saleable=#{saleable}

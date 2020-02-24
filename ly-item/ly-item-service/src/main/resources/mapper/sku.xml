@@ -29,7 +29,7 @@
             (#{stock.skuId}, #{stock.stock})
     </insert>
 
-    <select id="queryStockBySkuId" parameterType="java.lang.Long">
+    <select id="queryStockBySkuId" parameterType="java.lang.Long" resultType="stock">
         select * from tb_stock
         where sku_id = #{skuId}
     </select>

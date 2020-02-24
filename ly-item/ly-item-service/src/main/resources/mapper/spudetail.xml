@@ -16,22 +16,24 @@
         VALUES
             (#{spuDetail.spuId},
             #{spuDetail.description},
-            #{spuDetail.specifications},
-            #{spuDetail.specTemplate},
+            #{spuDetail.genericSpec},
+            #{spuDetail.specialSpec},
             #{spuDetail.packingList},
             #{spuDetail.afterService})
     </insert>
 
-    <select id="queryById" parameterType="java.lang.Long">
-        select * from tb_spu_detail
+    <select id="queryById" parameterType="java.lang.Long" resultType="SpuDetail">
+        select spu_id, description, specifications genericSpec,
+        spec_template specialSpec, packing_list, after_service
+        from tb_spu_detail
         where spu_id = #{spuId}
     </select>
 
     <update id="updateSpuDetail">
         update tb_spu_detail set
             `description`=#{spuDetail.description},
-            `specifications`=#{spuDetail.specifications},
-            `spec_template`=#{spuDetail.specTemplate},
+            `specifications`=#{spuDetail.genericSpec},
+            `spec_template`=#{spuDetail.specialSpec},
             `packing_list`=#{spuDetail.packingList},
             `after_service`=#{spuDetail.afterService}
         where

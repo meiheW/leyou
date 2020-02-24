@@ -34,12 +34,12 @@ public class GoodsController {
     }
 
     @PostMapping("/goods")
-    public void insertGoods(SpuBo spuBo){
+    public void insertGoods(@RequestBody SpuBo spuBo){
         goodsService.insertGoods(spuBo);
     }
 
     @PutMapping("/goods")
-    public void updateGoods(SpuBo spuBo){
+    public void updateGoods(@RequestBody SpuBo spuBo){
         goodsService.updateGoods(spuBo);
     }
 

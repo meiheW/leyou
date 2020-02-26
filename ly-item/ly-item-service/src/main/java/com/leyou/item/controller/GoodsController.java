@@ -19,6 +19,7 @@ import java.util.List;
  * @date 2020/02/16  21:11
  */
 @RestController
+@RequestMapping("/goods")
 public class GoodsController {
 
     @Autowired
@@ -33,12 +34,12 @@ public class GoodsController {
         return goodsService.querySpuByPage(saleable, key, pageNo, pageSize);
     }
 
-    @PostMapping("/goods")
+    @PostMapping("/add")
     public void insertGoods(@RequestBody SpuBo spuBo){
         goodsService.insertGoods(spuBo);
     }
 
-    @PutMapping("/goods")
+    @PostMapping("/edit")
     public void updateGoods(@RequestBody SpuBo spuBo){
         goodsService.updateGoods(spuBo);
     }

@@ -9,7 +9,18 @@
         SELECT * FROM tb_category WHERE id = #{id}
     </select>
 
-    <select id="queryByPid" parameterType="java.lang.Long" resultType="category">
+    <select id="queryCategoryByIds" parameterType="java.lang.Long" resultType="category">
+        SELECT * FROM tb_category
+        <where>
+            id in
+            <foreach item="item" collection="ids" separator="," open="(" close=")" index="">
+                #{item, jdbcType=NUMERIC}
+            </foreach>
+        </where>
+
+    </select>
+
+    <select id="queryCategoryByPid" parameterType="java.lang.Long" resultType="category">
         SELECT * FROM tb_category WHERE parent_id = #{pid}
     </select>
 

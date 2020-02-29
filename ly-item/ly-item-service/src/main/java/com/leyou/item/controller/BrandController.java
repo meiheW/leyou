@@ -39,4 +39,9 @@ public class BrandController {
         return brandService.queryBrandByCid(cid);
     }
 
+    @GetMapping("{id}")
+    public Brand queryBrandById(@PathVariable("id") Long id){
+        return brandService.queryBrandById(id);
+    }
+
 }

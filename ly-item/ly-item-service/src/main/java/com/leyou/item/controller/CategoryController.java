@@ -28,5 +28,11 @@ public class CategoryController {
     }
 
 
+    @RequestMapping("/list/ids")
+    public List<Category> queryByIds(@RequestParam("ids")List<Long> ids){
+        return categoryService.queryByIds(ids);
+    }
+
+
 
 }

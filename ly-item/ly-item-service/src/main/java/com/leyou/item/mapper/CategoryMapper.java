@@ -1,6 +1,7 @@
 package com.leyou.item.mapper;
 
 import com.leyou.item.pojo.Category;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,9 @@ public interface CategoryMapper {
 
     Category queryById(Long id);
 
-    List<Category> queryByPid(Long pid);
+    List<Category> queryCategoryByIds(@Param("ids") List<Long> ids);
+
+    List<Category> queryCategoryByPid(Long pid);
 
 
 }

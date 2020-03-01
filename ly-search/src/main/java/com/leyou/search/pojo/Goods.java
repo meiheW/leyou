@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author meihewang
@@ -56,7 +57,7 @@ public class Goods {
     /**
      * 价格
      */
-    private List<Long> price;
+    private Set<Long> price;
     /**
      * sku信息的json结构
      */

@@ -3,6 +3,7 @@ package com.leyou.search.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leyou.common.pojo.PageResult;
 import com.leyou.item.dto.SkuDto;
 import com.leyou.item.pojo.*;
 import com.leyou.search.client.BrandClient;
@@ -10,9 +11,17 @@ import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecClient;
 import com.leyou.search.pojo.Goods;
+import com.leyou.search.pojo.SearchRequest;
+import com.leyou.search.repository.GoodsRepository;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,6 +46,9 @@ public class SearchService {
 
     @Autowired
     private BrandClient brandClient;
+
+    @Autowired
+    GoodsRepository goodsRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -136,4 +148,23 @@ public class SearchService {
         return result;
     }
 
+    public PageResult<Goods> search(SearchRequest searchRequest) {
+        int page = searchRequest.getPage() - 1;
+        int size = searchRequest.getSize();
+
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        //result filter
+        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id", "subTitle", "skus"}, null));
+        //page & filter
+        queryBuilder.withPageable(PageRequest.of(page, size));
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all", searchRequest.getKey()));
+        //query
+        Page<Goods> result = goodsRepository.search(queryBuilder.build());
+        //parse & build
+        PageResult<Goods> pageResult = new PageResult<Goods>();
+        pageResult.setTotal(result.getTotalElements());
+        pageResult.setItems(result.getContent());
+
+        return pageResult;
+    }
 }

@@ -12,14 +12,23 @@ import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecClient;
 import com.leyou.search.pojo.Goods;
 import com.leyou.search.pojo.SearchRequest;
+import com.leyou.search.pojo.SearchResult;
 import com.leyou.search.repository.GoodsRepository;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.assertj.core.util.Lists;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -48,7 +57,10 @@ public class SearchService {
     private BrandClient brandClient;
 
     @Autowired
-    GoodsRepository goodsRepository;
+    private GoodsRepository goodsRepository;
+
+    @Autowired
+    private ElasticsearchTemplate template;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -158,13 +170,44 @@ public class SearchService {
         //page & filter
         queryBuilder.withPageable(PageRequest.of(page, size));
         queryBuilder.withQuery(QueryBuilders.matchQuery("all", searchRequest.getKey()));
+        //aggregate
+        String categoryAggName = "category_agg";
+        queryBuilder.addAggregation(AggregationBuilders.terms(categoryAggName).field("cid3"));
+        String brandAggName = "brand_agg";
+        queryBuilder.addAggregation(AggregationBuilders.terms(brandAggName).field("brandId"));
         //query
-        Page<Goods> result = goodsRepository.search(queryBuilder.build());
+        //Page<Goods> result = goodsRepository.search(queryBuilder.build());
+        AggregatedPage<Goods> result = template.queryForPage(queryBuilder.build(), Goods.class);
+
         //parse & build
-        PageResult<Goods> pageResult = new PageResult<Goods>();
+        SearchResult pageResult = new SearchResult<Goods>();
         pageResult.setTotal(result.getTotalElements());
         pageResult.setItems(result.getContent());
-
+        //parse agg
+        Aggregations aggs = result.getAggregations();
+        List<Category> categories = parseCategoryAgg(aggs.get(categoryAggName));
+        List<Brand> brands = parseBrandAgg(aggs.get(brandAggName));
+        pageResult.setCategories(categories);
+        pageResult.setBrands(brands);
         return pageResult;
+    }
+
+    private List<Brand> parseBrandAgg(LongTerms longTerms) {
+        List<Long> ids = longTerms.getBuckets()
+                .stream().map(b -> b.getKeyAsNumber().longValue())
+                .collect(Collectors.toList());
+        List<Brand> brandList = Lists.newArrayList();
+        for(Long id : ids){
+            Brand brand = brandClient.queryBrandById(id);
+            brandList.add(brand);
+        }
+        return brandList;
+    }
+
+    private List<Category> parseCategoryAgg(LongTerms longTerms) {
+        List<Long> ids = longTerms.getBuckets()
+                .stream().map(b -> b.getKeyAsNumber().longValue())
+                .collect(Collectors.toList());
+        return categoryClient.queryCategoryByIds(ids);
     }
 }

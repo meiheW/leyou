@@ -37,17 +37,17 @@ public class GoodsService {
     public PageResult<SpuDto> querySpuByPage(Boolean saleable, String key, Integer pageNo, Integer pageSize) {
         PageResult pageResult = new PageResult<SpuDto>();
         Long count = spuMapper.querySpuCount(saleable, key);
-        List<Spu> spuList = spuMapper.querySpuList(saleable, key, (pageNo-1)*pageSize, pageSize);
+        List<Spu> spuList = spuMapper.querySpuList(saleable, key, (pageNo - 1) * pageSize, pageSize);
         List<SpuDto> spuDtoList = Lists.newArrayList();
-        for(Spu spu : spuList){
+        for (Spu spu : spuList) {
             SpuDto spuDto = new SpuDto();
             BeanUtils.copyProperties(spu, spuDto);
             Brand brand = brandMapper.queryById(spu.getBrandId());
             spuDto.setBname(brand.getName());
             spuDto.setCname(
-                categoryMapper.queryById(spu.getCid1()).getName()+"/"+
-                categoryMapper.queryById(spu.getCid2()).getName()+"/"+
-                categoryMapper.queryById(spu.getCid3()).getName()
+                    categoryMapper.queryById(spu.getCid1()).getName() + "/" +
+                            categoryMapper.queryById(spu.getCid2()).getName() + "/" +
+                            categoryMapper.queryById(spu.getCid3()).getName()
             );
             spuDtoList.add(spuDto);
         }
@@ -61,7 +61,7 @@ public class GoodsService {
         spuBo.setSaleable(true);
         spuBo.setValid(true);
         spuMapper.insertSpu(spuBo);
-        if(spuBo.getId()==null){
+        if (spuBo.getId() == null) {
             throw new RuntimeException();
         }
         Long spuId = spuBo.getId();
@@ -69,15 +69,15 @@ public class GoodsService {
         spuDetailMapper.insertSpuDetail(spuBo.getSpuDetail());
 
         List<SkuDto> skus = spuBo.getSkus();
-        for(Sku sku : skus){
+        for (Sku sku : skus) {
             sku.setSpuId(spuId);
             skuMapper.insertSku(sku);
-            if(sku.getId()==null){
+            if (sku.getId() == null) {
                 throw new RuntimeException();
             }
             Stock stock = new Stock();
             stock.setSkuId(sku.getId());
-            stock.setStock(((SkuDto)sku).getStock());
+            stock.setStock(((SkuDto) sku).getStock());
             skuMapper.insertStock(stock);
         }
 
@@ -90,7 +90,7 @@ public class GoodsService {
     public List<SkuDto> querySkuBySpuId(Long spuId) {
         List<Sku> skuList = skuMapper.querySkuListBySpuId(spuId);
         List<SkuDto> skuDtoList = Lists.newArrayList();
-        for(Sku sku : skuList){
+        for (Sku sku : skuList) {
             SkuDto sd = new SkuDto();
             BeanUtils.copyProperties(sku, sd);
             Stock stock = skuMapper.queryStockBySkuId(sku.getId());
@@ -104,7 +104,7 @@ public class GoodsService {
     public void updateGoods(SpuBo spuBo) {
         //删除sku和库存
         List<Sku> skuList = skuMapper.querySkuListBySpuId(spuBo.getId());
-        for(Sku sku : skuList){
+        for (Sku sku : skuList) {
             skuMapper.deleteStockBySkuId(sku.getId());
         }
         skuMapper.deleteSkuBySpuId(spuBo.getId());
@@ -113,7 +113,7 @@ public class GoodsService {
         //更新spuDetail
         spuDetailMapper.updateSpuDetail(spuBo.getSpuDetail());
         //插入sku和库存
-        for(SkuDto sd : spuBo.getSkus()){
+        for (SkuDto sd : spuBo.getSkus()) {
             sd.setSpuId(spuBo.getId());
             skuMapper.insertSku(sd);
             Stock stock = new Stock();
@@ -121,5 +121,9 @@ public class GoodsService {
             stock.setStock(sd.getStock());
             skuMapper.insertStock(stock);
         }
+    }
+
+    public Spu querySpuById(Long spuId) {
+        return spuMapper.queryById(spuId);
     }
 }

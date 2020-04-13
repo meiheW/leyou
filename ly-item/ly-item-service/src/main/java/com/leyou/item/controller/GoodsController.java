@@ -55,4 +55,9 @@ public class GoodsController {
     }
 
 
+    @GetMapping("/spu/{id}")
+    public SpuDto querySpuById(@PathVariable("id") Long spuId) {
+        return goodsService.querySpuById(spuId);
+    }
+
 }

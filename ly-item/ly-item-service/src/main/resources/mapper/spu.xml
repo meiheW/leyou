@@ -46,4 +46,8 @@
         where
             `id`=#{spuBo.id}
     </update>
+
+    <select id="queryById" resultType="spu">
+        SELECT * FROM tb_spu where id = {id}
+    </select>
 </mapper>

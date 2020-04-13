@@ -20,4 +20,6 @@ public interface SpuMapper {
     void insertSpu(@Param("spuBo")SpuBo spuBo);
 
     void updateSpu(@Param("spuBo")SpuBo spuBo);
+
+    Spu queryById(@Param("id")Long id);
 }

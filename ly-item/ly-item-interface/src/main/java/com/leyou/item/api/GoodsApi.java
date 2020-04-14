@@ -48,4 +48,8 @@ public interface GoodsApi {
             @RequestParam(value = "rows", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "saleable", defaultValue = "false") Boolean saleable,
             @RequestParam(value = "key", required = false) String key);
+
+
+    @GetMapping("/spu/{id}")
+    public SpuBo querySpuById(@PathVariable("id") Long spuId);
 }

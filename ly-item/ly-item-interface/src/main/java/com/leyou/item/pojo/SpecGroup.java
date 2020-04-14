@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * @author meihewang
@@ -19,4 +21,7 @@ public class SpecGroup {
     private Long cid;
 
     private String name;
+
+    @Transient
+    private List<SpecGroupParam> params;
 }

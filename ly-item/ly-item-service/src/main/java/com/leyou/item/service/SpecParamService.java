@@ -1,7 +1,9 @@
 package com.leyou.item.service;
 
 import com.google.common.collect.Lists;
+import com.leyou.item.mapper.SpecGroupMapper;
 import com.leyou.item.mapper.SpecParamMapper;
+import com.leyou.item.pojo.SpecGroup;
 import com.leyou.item.pojo.SpecGroupParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class SpecParamService {
 
     @Autowired
     SpecParamMapper specParamMapper;
+    @Autowired
+    SpecService specService;
 
     public List<SpecGroupParam> querySpecGroupParam(Long gid, Long cid, Boolean searching, Boolean generic) {
         return specParamMapper.querySpecGroupParam(gid, cid, searching, generic);
@@ -33,5 +37,14 @@ public class SpecParamService {
 
     public void deleteGroupParam(Long id) {
         specParamMapper.deleteGroupParam(id);
+    }
+
+    public List<SpecGroup> queryListByCid(Long cid) {
+        List<SpecGroup> specGroups = specService.querySpecGroup(cid);
+        for (SpecGroup SpecGroup : specGroups) {
+            List<SpecGroupParam> specGroupParams = querySpecGroupParam(null, cid, null, null);
+            SpecGroup.setParams(specGroupParams);
+        }
+        return specGroups;
     }
 }

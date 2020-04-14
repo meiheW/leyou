@@ -1,5 +1,6 @@
 package com.leyou.item.api;
 
+import com.leyou.item.pojo.SpecGroup;
 import com.leyou.item.pojo.SpecGroupParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,4 +18,7 @@ public interface SpecApi {
             @RequestParam(value = "cid", required = false) Long cid,
             @RequestParam(value = "searching", required = false) Boolean searching,
             @RequestParam(value="generic", required = false) Boolean generic);
+
+    @GetMapping("/spec/param/group")
+    List<SpecGroup> queryGroupByCid(@RequestParam("cid") Long cid);
 }

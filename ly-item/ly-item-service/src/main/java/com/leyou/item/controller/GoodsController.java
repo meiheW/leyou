@@ -8,6 +8,7 @@ import com.leyou.item.pojo.Sku;
 import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.service.GoodsService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,29 +36,34 @@ public class GoodsController {
     }
 
     @PostMapping("/add")
-    public void insertGoods(@RequestBody SpuBo spuBo){
+    public void insertGoods(@RequestBody SpuBo spuBo) {
         goodsService.insertGoods(spuBo);
     }
 
     @PostMapping("/edit")
-    public void updateGoods(@RequestBody SpuBo spuBo){
+    public void updateGoods(@RequestBody SpuBo spuBo) {
         goodsService.updateGoods(spuBo);
     }
 
     @GetMapping("/spu/detail/{id}")
-    public SpuDetail querySpuDetailById(@PathVariable("id") Long spuId){
+    public SpuDetail querySpuDetailById(@PathVariable("id") Long spuId) {
         return goodsService.querySpuDetailById(spuId);
     }
 
     @GetMapping("/sku/list")
-    public List<SkuDto> querySkuList(@RequestParam("id") Long spuId){
+    public List<SkuDto> querySkuList(@RequestParam("id") Long spuId) {
         return goodsService.querySkuBySpuId(spuId);
     }
 
 
     @GetMapping("/spu/{id}")
-    public SpuDto querySpuById(@PathVariable("id") Long spuId) {
-        return goodsService.querySpuById(spuId);
+    public SpuBo querySpuById(@PathVariable("id") Long spuId) {
+        SpuBo sb = new SpuBo();
+        Spu spu = goodsService.querySpuById(spuId);
+        BeanUtils.copyProperties(spu, sb);
+        sb.setSkus(goodsService.querySkuBySpuId(spuId));
+        sb.setSpuDetail(goodsService.querySpuDetailById(spuId));
+        return sb;
     }
 
 }
